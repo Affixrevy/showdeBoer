@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<title>My Sketch</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.0/processing.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+        <h1>Code this in processing</h1>
+        
+            <script type="application/processing">
+                color backgroundColor = #ffffff; 
+                color brushColor = #000000; 
+                boolean isEraser = false; 
+                int brushSize = 10;  
+                PVector initialPos;
+                boolean hasSaved;
+                void setup() {
+                size(800, 800);
+                background(backgroundColor);
+                textAlign(CENTER);
+                initialPos = new PVector(0, 0);
+                }
+                void draw() {
+                textSize(16); 
+                fill(0);
+                text("Welcome to namesoft paint", width/2, height/30);
+                text("Press e to erase, Press b for blue, Press r for red", width/2, height/30 + 15);
+                text("Press y for yellow, Press l for black, Press c to clear", width/2, height/30 + 30);
+                noStroke();
+                fill(backgroundColor);
+                rect(0, 0, 45, 45);
+                fill(0);
+                text(brushSize, 25, 25);
+                if (isEraser) {
+                    brushColor = backgroundColor; 
+                }
+                if (mousePressed) {
+                    if (hasSaved) {
+                    stroke(brushColor); 
+                    strokeWeight(brushSize); 
+                    line(initialPos.x, initialPos.y, mouseX, mouseY);
+                    }
+                    initialPos.x = mouseX; 
+                    initialPos.y = mouseY; 
+                    hasSaved = true;
+                }
+                }
+                void keyPressed() {
+                if (key == 'e') {
+                    isEraser = true;
+                } else if (key == 'b') {
+                    brushColor = #0000ff;
+                    isEraser = false;
+                } else if (key == 'l') {
+                    brushColor = #000000;
+                    isEraser = false;
+                } else if (key == 'r') {
+                    brushColor = #ff0000;
+                    isEraser = false;
+                } else if (key == 'y') {
+                    brushColor = #ffff00;
+                    isEraser = false;
+                } else if (key == 'c') {
+                    background(backgroundColor);
+                    isEraser = false;
+                } else if (keyCode == UP){
+                    brushSize++;
+                } else if (keyCode == DOWN){
+                    if(brushSize > 1){  
+                    brushSize--;
+                    }
+                }
+                }
+                void mouseReleased() {
+                hasSaved = false;
+                }
+                void mouseWheel(MouseEvent event) {
+                float e = event.getCount();
+                e = e*-1;
+                if(e>0){
+                    brushSize+=e;
+                } else if(brushSize > 1){
+                    brushSize+=e;
+                }
+                }
+            </script>
+        
+            
+        <canvas> </canvas>
+   </body>
+</html>
